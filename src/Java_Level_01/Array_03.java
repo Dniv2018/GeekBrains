@@ -1,6 +1,7 @@
 package Java_Level_01;
 
 import java.util.Arrays;
+import java.util.Random;
 
 public class Array_03 {
     public static void main(String[] args) {
@@ -42,6 +43,29 @@ public class Array_03 {
         System.out.println("Рузультат:");
         printOneArray(makeArrayByLengthAndValue(10, 2));
         System.out.println(" ");
+
+        System.out.println("6. * Задать одномерный массив и найти в нем минимальный и максимальный элементы;");
+        int[] result = minAndMaxValueArray();
+        System.out.println("Рузультат:");
+        System.out.println("min: "+ result[0] + " max: " + result[1]);
+        System.out.println(" ");
+    }
+
+    static int[] minAndMaxValueArray(){
+        Random rnd = new Random();
+        int len = rnd.nextInt(30);
+        int [] elemental = new int[len];
+        for (int i=0; i<len; i++){
+            elemental[i]=rnd.nextInt(20);
+        }
+        System.out.println("Случайный исходный массив:");
+        printOneArray(elemental);
+        int[] rsl = new int[2];
+        for (int cell:elemental) {
+            if(rsl[0]>cell) rsl[0]=cell;
+            if(rsl[1]<cell) rsl[1]=cell;
+        }
+        return rsl;
     }
 
     static int[] makeArrayByLengthAndValue(int len, int val){

@@ -49,6 +49,63 @@ public class Array_03 {
         System.out.println("Рузультат:");
         System.out.println("min: "+ result[0] + " max: " + result[1]);
         System.out.println(" ");
+
+        System.out.println("7. ** Написать метод, в который передается не пустой одномерный целочисленный массив, " +
+                "метод должен вернуть true, если в массиве есть место, в котором сумма левой и правой части массива равны.");
+        int[] firstCheckBalance = {2, 2, 2, 1, 2, 2, 10, 1};
+        int[] checkArrayBalance = {21,1,2,3,4,5,6};
+        Random rnd = new Random();
+        int len = rnd.nextInt(30);
+        int [] secondCheckBalance = new int[len];
+        for (int i=0; i<len; i++){
+            secondCheckBalance[i]=rnd.nextInt(20);
+        }
+        printOneArray(firstCheckBalance);
+        printBalanceArray(firstCheckBalance);
+        System.out.println(" ");
+        printOneArray(checkArrayBalance);
+        printBalanceArray(checkArrayBalance);
+        System.out.println(" ");
+        printOneArray(secondCheckBalance);
+        printBalanceArray(secondCheckBalance);
+        System.out.println(" ");
+
+    }
+
+    private static void printBalanceArray(int[] inputArray) {
+        int[] rsl = findBalance(inputArray);
+        if (rsl[3]==1){
+            for (int i = 0; i < inputArray.length; i++) {
+                System.out.print(" " + inputArray[i]);
+                if (i == rsl[0]) {
+                    System.out.print(" |||");
+                }
+            }
+            System.out.println(" ");
+            System.out.println("Левая сумма: " + rsl[1]);
+            System.out.println("Правая сумма: " + rsl[2]);
+        }else{
+            System.out.println("Баланс не найден");
+        }
+    }
+
+    static int[] findBalance(int[] inputArray){
+        int[] rsl = new int[4];
+        int leftSum = 0;
+        for(int i =0; i<inputArray.length-1;i++){
+            leftSum += inputArray[i];
+            int rightSum = 0;
+            for(int j=i+1; j<inputArray.length;j++){
+                rightSum+=inputArray[j];
+            }
+            if (leftSum==rightSum){
+                rsl[0] = i;
+                rsl[1] = leftSum;
+                rsl[2] = rightSum;
+                rsl[3] = 1;
+            }
+        }
+        return rsl;
     }
 
     static int[] minAndMaxValueArray(){

@@ -28,6 +28,22 @@ public class Array_03 {
         printOneArray(arrayMult);
         System.out.println(" ");
 
+        int[][] squareArray = new int[5][5];
+        System.out.println("4. Создать квадратный двумерный целочисленный массив, и с помощью циклов " +
+                "заполнить его диагональные элементы единицами");
+        for (int i=0;i<5;i++) printOneArray(squareArray[i]);
+        fillingDiagonally(squareArray);
+        System.out.println("Рузультат:");
+        for (int i=0;i<5;i++) printOneArray(squareArray[i]);
+        System.out.println(" ");
+    }
+
+    static void fillingDiagonally(int[][] array){
+        for (int i=0; i<5;i++){
+            for (int j=0; j<5;j++){
+                if ((i==j)||(i+j==4)) array[i][j]=1;
+            }
+        }
     }
 
     static void ifLessSixMultiplyTwo (int[] a){

@@ -11,46 +11,40 @@ public class Array_03 {
         switchBetweenNullAndOne(firstArray);
         System.out.println("Рузультат:");
         printOneArray(firstArray);
-        System.out.println(" ");
 
         int[] arrayHundred = new int[100];
-        System.out.println("2. С помощью цикла заполнить массив длиной 100 значениями 1 2 3 4 5 6 7 8 … 100");
+        System.out.println("\n2. С помощью цикла заполнить массив длиной 100 значениями 1 2 3 4 5 6 7 8 … 100");
         printOneArray(arrayHundred);
         fillingUpArray(arrayHundred);
         System.out.println("Рузультат:");
         printOneArray(arrayHundred);
-        System.out.println(" ");
 
         int[] arrayMult = {1, 5, 3, 2, 11, 4, 5, 2, 4, 8, 9, 1};
-        System.out.println("3. В массиве числа меньшие 6 умножить на 2;");
+        System.out.println("\n3. В массиве числа меньшие 6 умножить на 2;");
         printOneArray(arrayMult);
         ifLessSixMultiplyTwo(arrayMult);
         System.out.println("Рузультат:");
         printOneArray(arrayMult);
-        System.out.println(" ");
 
         int[][] squareArray = new int[5][5];
-        System.out.println("4. Создать квадратный двумерный целочисленный массив, и с помощью циклов " +
+        System.out.println("\n4. Создать квадратный двумерный целочисленный массив, и с помощью циклов " +
                 "заполнить его диагональные элементы единицами");
         for (int i=0;i<5;i++) printOneArray(squareArray[i]);
         fillingDiagonally(squareArray);
         System.out.println("Рузультат:");
         for (int i=0;i<5;i++) printOneArray(squareArray[i]);
-        System.out.println(" ");
 
-        System.out.println("5. Написать метод, принимающий на вход два аргумента: len и initialValue, " +
+        System.out.println("\n5. Написать метод, принимающий на вход два аргумента: len и initialValue, " +
                 "и возвращающий одномерный массив типа int длиной len, каждая ячейка которого равна initialValue;");
         System.out.println("Рузультат:");
         printOneArray(makeArrayByLengthAndValue(10, 2));
-        System.out.println(" ");
 
-        System.out.println("6. * Задать одномерный массив и найти в нем минимальный и максимальный элементы;");
+        System.out.println("\n6. * Задать одномерный массив и найти в нем минимальный и максимальный элементы;");
         int[] result = minAndMaxValueArray();
         System.out.println("Рузультат:");
         System.out.println("min: "+ result[0] + " max: " + result[1]);
-        System.out.println(" ");
 
-        System.out.println("7. ** Написать метод, в который передается не пустой одномерный целочисленный массив, " +
+        System.out.println("\n7. ** Написать метод, в который передается не пустой одномерный целочисленный массив, " +
                 "метод должен вернуть true, если в массиве есть место, в котором сумма левой и правой части массива равны.");
         int[] firstCheckBalance = {2, 2, 2, 1, 2, 2, 10, 1};
         int[] checkArrayBalance = {21,1,2,3,4,5,6};
@@ -70,6 +64,12 @@ public class Array_03 {
         printBalanceArray(secondCheckBalance);
         System.out.println(" ");
 
+        System.out.println("\n8. *** Написать метод, которому на вход подается одномерный массив " +
+                "и число n (может быть положительным, или отрицательным), при этом метод должен сместить " +
+                "все элементы массива на n позиций. Элементы смещаются циклично. Для усложнения задачи нельзя " +
+                "пользоваться вспомогательными массивами. Примеры: [ 1, 2, 3 ] при n = 1 (на один вправо) " +
+                "-> [ 3, 1, 2 ]; [ 3, 5, 6, 1] при n = -2 (на два влево) -> [ 6, 1, 3, 5 ]. При каком n в какую " +
+                "сторону сдвиг можете выбирать сами.");
     }
 
     private static void printBalanceArray(int[] inputArray) {
@@ -81,8 +81,7 @@ public class Array_03 {
                     System.out.print(" |||");
                 }
             }
-            System.out.println(" ");
-            System.out.println("Левая сумма: " + rsl[1]);
+            System.out.println("\nЛевая сумма: " + rsl[1]);
             System.out.println("Правая сумма: " + rsl[2]);
         }else{
             System.out.println("Баланс не найден");

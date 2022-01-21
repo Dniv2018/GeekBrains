@@ -36,6 +36,20 @@ public class Array_03 {
         System.out.println("Рузультат:");
         for (int i=0;i<5;i++) printOneArray(squareArray[i]);
         System.out.println(" ");
+
+        System.out.println("5. Написать метод, принимающий на вход два аргумента: len и initialValue, " +
+                "и возвращающий одномерный массив типа int длиной len, каждая ячейка которого равна initialValue;");
+        System.out.println("Рузультат:");
+        printOneArray(makeArrayByLengthAndValue(10, 2));
+        System.out.println(" ");
+    }
+
+    static int[] makeArrayByLengthAndValue(int len, int val){
+        int[] makeArray = new int[len];
+        for (int i=0; i<len;i++){
+            makeArray[i]=val;
+        }
+        return makeArray;
     }
 
     static void fillingDiagonally(int[][] array){

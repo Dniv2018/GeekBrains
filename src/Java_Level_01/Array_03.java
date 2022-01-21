@@ -62,7 +62,6 @@ public class Array_03 {
         System.out.println(" ");
         printOneArray(secondCheckBalance);
         printBalanceArray(secondCheckBalance);
-        System.out.println(" ");
 
         System.out.println("\n8. *** Написать метод, которому на вход подается одномерный массив " +
                 "и число n (может быть положительным, или отрицательным), при этом метод должен сместить " +

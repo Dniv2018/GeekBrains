@@ -69,6 +69,37 @@ public class Array_03 {
                 "пользоваться вспомогательными массивами. Примеры: [ 1, 2, 3 ] при n = 1 (на один вправо) " +
                 "-> [ 3, 1, 2 ]; [ 3, 5, 6, 1] при n = -2 (на два влево) -> [ 6, 1, 3, 5 ]. При каком n в какую " +
                 "сторону сдвиг можете выбирать сами.");
+        int lenEight = rnd.nextInt(9)+3;
+        int[] arrayChange = new int[lenEight];
+//        int[] arrayChange = {1,2,3,4,5,6,7,8};
+//        int displacement = 3;
+        int displacement = rnd.nextInt(10)+1-5;
+        for(int i=0;i<lenEight;i++) arrayChange[i] = rnd.nextInt(10);
+        printOneArray(arrayChange);
+        System.out.println("Сдвиг: "+displacement);
+        changeChain(arrayChange,displacement);
+        printOneArray(arrayChange);
+    }
+
+    static void changeChain(int[]inputArray, int dsp){
+        int maxIndexArray = inputArray.length-1;
+        if (dsp<0){
+            while (dsp<0) dsp += inputArray.length;
+        }
+        while (dsp>=inputArray.length) dsp -= inputArray.length;
+            System.out.println("Фактический сдвиг:" + dsp);
+        int a;
+        int b;
+        while (dsp!=0){
+            a = inputArray[0];
+            for(int i = 1;i<=maxIndexArray; i++){
+                b=inputArray[i];
+                inputArray[i]=a;
+                a=b;
+                if(i==maxIndexArray) inputArray[0]=a;
+            }
+            dsp--;
+        }
     }
 
     private static void printBalanceArray(int[] inputArray) {

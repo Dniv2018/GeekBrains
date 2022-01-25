@@ -31,6 +31,8 @@ Random rand = new Random();
             System.out.println("Вы победили!");
         }
 
+        makeMapDanger();
+
 
 
 
@@ -41,36 +43,122 @@ Random rand = new Random();
     private static void makeMapDanger(){
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
-                mapDanger[i][j] = SIZE;
+                mapDanger[i][j] = LINE;
             }
         }
+//        for (int i=0; i<SIZE; i++) {
+//            System.out.println(Arrays.toString(mapDanger[i]));
+//        }
 
-        int a = 0;
+        //int a = 0;
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++){
                 if(mapGame[i][j]==DOT_X){
-                    a = countHorizontLine(j,i, DOT_X);
-                    if ((j+a+1<SIZE)&(mapGame[i][j+a+1]!=DOT_0)&(mapDanger[i][j+a+1]>a)){
-                        mapDanger[i][j+a+1]=a;
-                        j=j+a+1;
-                    }
+//                    countHorizontLine(j,i, DOT_X);
+                    countVertLine(j,i, DOT_X);
+//                    countSleshLine(j,i, DOT_X);
+//                    countBackSleshLine(j,i, DOT_X);
+                }
+            }
+        }
+        for (int i=0; i<SIZE; i++) {
+            System.out.println(Arrays.toString(mapDanger[i]));
+        }
+    }
+
+    private static void makeMapWin(){
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                mapWin[i][j] = LINE;
+            }
+        }
+
+        //int a = 0;
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++){
+                if(mapGame[i][j]==DOT_X){
+                    countHorizontLine(j,i, DOT_X);
+                    countVertLine(j,i, DOT_X);
+                    countSleshLine(j,i, DOT_X);
+                    countBackSleshLine(j,i, DOT_X);
                 }
             }
         }
     }
 
-    private static int countHorizontLine(int x, int y, char DOT){
+    private static void countHorizontLine(int x, int y, char DOT){
         int cl=0;
-        for (int i =1; i<SIZE; i++){
-            if ((x+i<SIZE) & (mapGame[y][x+i]==DOT)) cl++;
-            //if ((x+i<SIZE) & (mapGame[y][x+i]!=DOT) & mapGame[y][x+i]!=DOT_0 & mapDanger[y][x+i]>cl) mapDanger[y][x+i]=cl;
+        //int cl_L=0;
+        for (int i =0; i<SIZE; i++){
+            if ((x+i<SIZE) && (mapGame[y][x+i]==DOT)) cl++;
+            canPointWrite(x+i,y, DOT, cl);
         }
-        return cl;
-//        cl=0;
-//        for (int i =SIZE-1; i>=0; i--){
-//            if ((x+i>=0) & (mapGame[y][x+i]==DOT)) cl++;
-//            if ((x+i<SIZE) & (mapGame[y][x+i]!=DOT) & mapGame[y][x+i]!=DOT_0 & mapDanger[y][x+i]>cl) mapDanger[y][x+i]=cl;
-//        }
+        //return cl;
+        cl=0;
+        for (int i =0; i<SIZE; i++){
+            if ((x-i>=0) && (mapGame[y][x-i]==DOT)) cl++;
+            canPointWrite(x-i,y, DOT, cl);
+        }
+    }
+
+    private static void countVertLine(int x, int y, char DOT){
+        int cl=0;
+        //int cl_L=0;
+        for (int i =0; i<SIZE; i++){
+            if ((y+i<SIZE) && (mapGame[y+i][x]==DOT)) cl++;
+            canPointWrite(x,y+i, DOT, cl);
+        }
+        //return cl;
+        cl=0;
+        for (int i =0; i<SIZE; i--){
+            if ((y-i>=0) && (mapGame[y-i][x]==DOT)) cl++;
+            canPointWrite(x,y-i, DOT, cl);
+        }
+    }
+
+    private static void countSleshLine(int x, int y, char DOT){
+        int cl=0;
+        //int cl_L=0;
+        for (int i =1; i<SIZE; i++){
+            if ((y-i>=0)&&(x+i<SIZE) && (mapGame[y-i][x+i]==DOT)) cl++;
+            canPointWrite(x+i,y-i, DOT, cl);
+        }
+        //return cl;
+        cl=0;
+        for (int i =SIZE-1; i>=0; i--){
+            if ((y+i<SIZE)&&(x-i>=0) && (mapGame[y+i][x]==DOT)) cl++;
+            canPointWrite(x+i,y, DOT, cl);
+        }
+    }
+
+    private static void countBackSleshLine(int x, int y, char DOT){
+        int cl=0;
+        //int cl_L=0;
+        for (int i =1; i<SIZE; i++){
+            if ((y+i>=0)&&(x+i<SIZE) && (mapGame[y+i][x+i]==DOT)) cl++;
+            canPointWrite(x+i,y+i, DOT, cl);
+        }
+        //return cl;
+        cl=0;
+        for (int i =SIZE-1; i>=0; i--){
+            if ((y-i<SIZE)&&(x-i>=0) && (mapGame[y-i][x]==DOT)) cl++;
+            canPointWrite(x-i,y-i, DOT, cl);
+        }
+    }
+
+    private static void canPointWrite(int x, int y, char DOT, int cl){
+        //boolean rsl = false;
+        switch (DOT){
+            case DOT_X:{
+                if ((x>=0)&(x<SIZE)&(y>=0)&(y<SIZE)&&(mapGame[y][x]!=DOT_0)&(mapDanger[y][x]>LINE-cl)) mapDanger[y][x] = LINE-cl;
+                break;
+            }
+//            case DOT_0:{
+//                if (0<=x&&x<SIZE&&0<=y&&y<SIZE&&mapGame[y][x]!=DOT_X&&mapWin[y][x]>LINE-cl) mapWin[y][x] = LINE-cl;
+//                break;
+//            }
+        }
+        //return rsl;
     }
 
     private static void makeMap(){

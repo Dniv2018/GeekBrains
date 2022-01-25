@@ -21,17 +21,27 @@ Random rand = new Random();
     public static void main(String[] args) {
         initMap();
         printMap();
-        makeMap();
+        //makeMap();
 
         turnHuman();
         printMap();
-        makeMap();
+        //makeMap();
         //boolean win = chekWin();
         if (chekWin()) {
             System.out.println("Вы победили!");
         }
-
+        //mapGame[1][2]=DOT_0;
+        //makeMap();
+        printMap();
+        System.out.println("DANGER");
         makeMapDanger();
+
+        System.out.println("Win");
+        makeMapWin();
+        System.out.println("Плотности");
+        makeMap();
+
+
 
 
 
@@ -40,6 +50,17 @@ Random rand = new Random();
 //        System.out.println(Arrays.toString(map));
 
     }
+
+//    private static void maskOnMap(char DOT_1, char DOT_2){
+//
+//                for (int i = 0; i < SIZE; i++) {
+//                    for (int j = 0; j < SIZE; j++) {
+//                        if(mapGame[i][j] == DOT_1) mapDanger[i][j]=0;
+//                        if(mapGame[i][j] == DOT_2) mapWin[i][j]=0;
+//                    }
+//                }
+//    }
+
     private static void makeMapDanger(){
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
@@ -54,11 +75,18 @@ Random rand = new Random();
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++){
                 if(mapGame[i][j]==DOT_X){
-//                    countHorizontLine(j,i, DOT_X);
+                    countHorizontLine(j,i, DOT_X);
                     countVertLine(j,i, DOT_X);
-//                    countSleshLine(j,i, DOT_X);
-//                    countBackSleshLine(j,i, DOT_X);
+                    countSleshLine(j,i, DOT_X);
+                    countBackSleshLine(j,i, DOT_X);
                 }
+            }
+        }
+
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                if(mapGame[i][j] == DOT_X) mapDanger[i][j]=0;
+                if(mapGame[i][j] == DOT_0) mapDanger[i][j]=0;
             }
         }
         for (int i=0; i<SIZE; i++) {
@@ -76,13 +104,24 @@ Random rand = new Random();
         //int a = 0;
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++){
-                if(mapGame[i][j]==DOT_X){
-                    countHorizontLine(j,i, DOT_X);
-                    countVertLine(j,i, DOT_X);
-                    countSleshLine(j,i, DOT_X);
-                    countBackSleshLine(j,i, DOT_X);
+                if(mapGame[i][j]==DOT_0){
+                    countHorizontLine(j,i, DOT_0);
+                    countVertLine(j,i, DOT_0);
+                    countSleshLine(j,i, DOT_0);
+                    countBackSleshLine(j,i, DOT_0);
                 }
             }
+        }
+
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                if(mapGame[i][j] == DOT_X) mapWin[i][j]=0;
+                if(mapGame[i][j] == DOT_0) mapWin[i][j]=0;
+            }
+        }
+
+        for (int i=0; i<SIZE; i++) {
+            System.out.println(Arrays.toString(mapWin[i]));
         }
     }
 
@@ -110,7 +149,7 @@ Random rand = new Random();
         }
         //return cl;
         cl=0;
-        for (int i =0; i<SIZE; i--){
+        for (int i =0; i<SIZE; i++){
             if ((y-i>=0) && (mapGame[y-i][x]==DOT)) cl++;
             canPointWrite(x,y-i, DOT, cl);
         }
@@ -119,29 +158,29 @@ Random rand = new Random();
     private static void countSleshLine(int x, int y, char DOT){
         int cl=0;
         //int cl_L=0;
-        for (int i =1; i<SIZE; i++){
+        for (int i =0; i<SIZE; i++){
             if ((y-i>=0)&&(x+i<SIZE) && (mapGame[y-i][x+i]==DOT)) cl++;
             canPointWrite(x+i,y-i, DOT, cl);
         }
         //return cl;
         cl=0;
-        for (int i =SIZE-1; i>=0; i--){
+        for (int i =0; i<SIZE; i++){
             if ((y+i<SIZE)&&(x-i>=0) && (mapGame[y+i][x]==DOT)) cl++;
-            canPointWrite(x+i,y, DOT, cl);
+            canPointWrite(x-i,y+i, DOT, cl);
         }
     }
 
     private static void countBackSleshLine(int x, int y, char DOT){
         int cl=0;
-        //int cl_L=0;
-        for (int i =1; i<SIZE; i++){
-            if ((y+i>=0)&&(x+i<SIZE) && (mapGame[y+i][x+i]==DOT)) cl++;
+        //int cl_L=0;\
+        for (int i =0; i<SIZE; i++){
+            if ((y+i<SIZE)&&(x+i<SIZE) && (mapGame[y+i][x+i]==DOT)) cl++;
             canPointWrite(x+i,y+i, DOT, cl);
         }
         //return cl;
         cl=0;
-        for (int i =SIZE-1; i>=0; i--){
-            if ((y-i<SIZE)&&(x-i>=0) && (mapGame[y-i][x]==DOT)) cl++;
+        for (int i =0; i<SIZE; i++){
+            if ((y-i>=0)&&(x-i>=0) && (mapGame[y-i][x-i]==DOT)) cl++;
             canPointWrite(x-i,y-i, DOT, cl);
         }
     }
@@ -153,10 +192,10 @@ Random rand = new Random();
                 if ((x>=0)&(x<SIZE)&(y>=0)&(y<SIZE)&&(mapGame[y][x]!=DOT_0)&(mapDanger[y][x]>LINE-cl)) mapDanger[y][x] = LINE-cl;
                 break;
             }
-//            case DOT_0:{
-//                if (0<=x&&x<SIZE&&0<=y&&y<SIZE&&mapGame[y][x]!=DOT_X&&mapWin[y][x]>LINE-cl) mapWin[y][x] = LINE-cl;
-//                break;
-//            }
+            case DOT_0:{
+                if ((x>=0)&(x<SIZE)&(y>=0)&(y<SIZE)&&(mapGame[y][x]!=DOT_X)&&(mapWin[y][x]>LINE-cl)) mapWin[y][x] = LINE-cl;
+                break;
+            }
         }
         //return rsl;
     }
@@ -170,25 +209,25 @@ Random rand = new Random();
         for (int vertPoint=0; vertPoint<SIZE; vertPoint++){
             for (int horizontPoint =0; horizontPoint< SIZE; horizontPoint++){
                 //isMakeLine(int x, int y, char DOT, char flag)
-                if (isMakeLine(horizontPoint, vertPoint, '.', '-')){
+                if (isMakeLine(horizontPoint, vertPoint, 'X', '-')){
                 //if (horizontPoint + (LINE-1) < SIZE){
                     for (int linePoint = 0; linePoint< LINE; linePoint++) {
                         map[vertPoint][horizontPoint+linePoint] ++;//по горизонтали
                     }
                 }
-                if (isMakeLine(horizontPoint, vertPoint, '.', '|')){
+                if (isMakeLine(horizontPoint, vertPoint, 'X', '|')){
                 //if (vertPoint + (LINE-1) < SIZE){
                     for (int linePoint = 0; linePoint< LINE; linePoint++) {
                         map[vertPoint+linePoint][horizontPoint] ++;//по вертикали
                     }
                 }
-                if(isMakeLine(horizontPoint, vertPoint, '.', 'b')){
+                if(isMakeLine(horizontPoint, vertPoint, 'X', 'b')){
                 //if((vertPoint+(LINE-1) < SIZE) & (horizontPoint+(LINE-1) < SIZE)){
                     for (int linePoint = 0; linePoint< LINE; linePoint++){
                         map[vertPoint+linePoint][horizontPoint+linePoint]++;//\обратный слэш
                     }
                 }
-                if(isMakeLine(horizontPoint, vertPoint, '.', '/')){
+                if(isMakeLine(horizontPoint, vertPoint, 'X', '/')){
                 //if((vertPoint+(LINE-1) < SIZE) & (horizontPoint-(LINE-1) >= 0)){
                     for (int linePoint = 0; linePoint< LINE; linePoint++){
                         map[vertPoint-linePoint][horizontPoint+linePoint]++;//прямой слэш
@@ -315,20 +354,20 @@ Random rand = new Random();
             switch (flag) {
                 case '-': {
                     //System.out.println("Jn dfv " +y+" "+" "+x+" "+" "+i);
-                    if (x + i >= SIZE || (mapGame[y][x + i] != DOT)) rsl = false;
+                    if (x + i >= SIZE || (mapGame[y][x + i] == DOT)) rsl = false;
                     break;
                 }
                 case '|': {
-                    if (y + i >= SIZE || mapGame[y + i][x] != DOT) rsl = false;
+                    if (y + i >= SIZE || mapGame[y + i][x] == DOT) rsl = false;
                     break;
                 }
                 case '/': {
                     //System.out.println("Jn dfv " +y+" "+" "+x+" "+" "+i);
-                    if (y - i < 0 || x + i >= SIZE || mapGame[y - i][x+i] != DOT) rsl = false;
+                    if (y - i < 0 || x + i >= SIZE || mapGame[y - i][x+i] == DOT) rsl = false;
                     break;
                 }
                 case 'b': {
-                    if (y + i >= SIZE || x + i >= SIZE || mapGame[y + i][x + i] != DOT) rsl = false;
+                    if (y + i >= SIZE || x + i >= SIZE || mapGame[y + i][x + i] == DOT) rsl = false;
                     break;
                 }
             }

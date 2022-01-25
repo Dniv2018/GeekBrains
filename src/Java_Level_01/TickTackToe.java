@@ -15,40 +15,123 @@ final static int[][] map = new int[SIZE][SIZE];
 final static int[][] mapDanger = new int[SIZE][SIZE];
 final static int[][] mapWin = new int[SIZE][SIZE];
 final static int[] turnPoint = new int[2];
+final static int[] calcPoint = new int[3];
 
 final static Scanner sc = new Scanner(System.in);
 Random rand = new Random();
     public static void main(String[] args) {
         initMap();
         printMap();
-        //makeMap();
 
+
+    while (true){
         turnHuman();
         printMap();
-        //makeMap();
-        //boolean win = chekWin();
+
         if (chekWin()) {
             System.out.println("Вы победили!");
+            break;
         }
-        //mapGame[1][2]=DOT_0;
-        //makeMap();
-        printMap();
-        System.out.println("DANGER");
+        //printMap();
+        //System.out.println("DANGER");
         makeMapDanger();
 
-        System.out.println("Win");
+        //System.out.println("Win");
         makeMapWin();
-        System.out.println("Плотности");
+        //System.out.println("Плотности");
         makeMap();
 
+        if (isCalcPoint()) {
+            takeCalcPoint();
+        }else{
+            if (isWinPoint()) takeWinPoint();
+        }
+
+        mapGame[calcPoint[1]][calcPoint[0]]=DOT_0;
+        turnPoint[0]=calcPoint[0];
+        turnPoint[1]=calcPoint[1];
+        System.out.println("Ход Компьютера:");
+        printMap();
+        if (chekWin()) {
+            System.out.println("Комп победил!");
+            break;
+        }
+        if (checkStandoff()) {
+            System.out.println("Ничья");
+            break;
+        }
 
 
+    }
 
 
+    }
 
+    private static boolean checkStandoff(){
+        //boolean rsl=false;
+        int count =0;
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++){
+                if (map[i][j]==0) count++;
+            }
+        }
+        return count==SIZE*SIZE;
+    }
 
-//        System.out.println(Arrays.toString(map));
+    private static void takeWinPoint() {
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++){
+                if (map[i][j]>calcPoint[2]){
+                    calcPoint[0]=j;
+                    calcPoint[1]=i;
+                    calcPoint[2]=map[i][j];
+                }
+            }
+        }
+    }
 
+    private static boolean isWinPoint() {
+        boolean rsl =false;
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++){
+                if (map[i][j]>0){
+                    calcPoint[0]=j;
+                    calcPoint[1]=i;
+                    calcPoint[2]=map[i][j];
+                    rsl=true;
+                }
+            }
+        }
+        return rsl;
+    }
+
+    private static boolean isCalcPoint() {
+        boolean rsl=false;
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                if (mapDanger[i][j]==1){
+                    calcPoint[0]=j;
+                    calcPoint[1]=i;
+                    calcPoint[2]=map[i][j];
+                    rsl=true;
+                }
+            }
+        }
+        return rsl;
+    }
+
+    private static void takeCalcPoint() {
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                if (mapDanger[i][j]==1){
+                    if (map[i][j]>calcPoint[2]){
+                        calcPoint[0]=j;
+                        calcPoint[1]=i;
+                        calcPoint[2]=map[i][j];
+                    }
+                }
+            }
+        }
     }
 
 //    private static void maskOnMap(char DOT_1, char DOT_2){
@@ -235,6 +318,13 @@ Random rand = new Random();
                 }
             }
         }
+
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                //if(mapGame[i][j] == DOT_X) map[i][j]=0;
+                if(mapGame[i][j] == DOT_0) map[i][j]=0;
+            }
+        }
         for (int i=0; i<SIZE; i++) {
             System.out.println(Arrays.toString(map[i]));
         }
@@ -244,66 +334,36 @@ Random rand = new Random();
         int x = turnPoint[0];
         int y = turnPoint[1];
         char b = mapGame[y][x];
-        int countX=0;
-        int countY=0;
-        int countSL=0;
-        int countOS=0;
+
+        boolean rsl = false;
         for (int i=0; i<SIZE;i++){
             for (int j=0; j<SIZE; j++){
                 if (mapGame[i][j]==b){
+                    int countX=0;
+                    int countY=0;
+                    int countSL=0;
+                    int countOS=0;
                     //по х
-                    for (int l = 1; l < LINE; l++){
-                        if ((j+l<SIZE)&&mapGame[i][j+l]!=b) {
-                            countX=0;
-                            break;
-                        }
-                        countX++;
+                    for (int l = 0; l < LINE; l++){
+                        if ((j+l<SIZE)&&mapGame[i][j+l]==b) countX++;
                     }
                     //по у
                     for (int l = 1; l < LINE; l++){
-                        if ((i+l<SIZE)&&mapGame[i+l][j]!=b){
-                            countY=0;
-                            break;
-                        }
-                        countY++;
+                        if ((i+l<SIZE)&&mapGame[i+l][j]==b) countY++;
                     }
                     //по SL
-                    for (int l = 1; l < LINE; l++){
-                        if ((i-l>=0)&&(j+l<SIZE)&&mapGame[i-l][j+l]!=b){
-                            countSL=0;
-                            break;
-                        }
-                        countSL++;
+                    for (int l = 0; l < LINE; l++){
+                        if ((i-l>=0)&&(j+l<SIZE)&&mapGame[i-l][j+l]==b) countSL++;
                     }
                     //по\ OS
-                    for (int l = 1; l < LINE; l++){
-                        if ((i+l<SIZE)&&(j+l<SIZE)&&mapGame[i+l][j+l]!=b){
-                            countOS=0;
-                            break;
-                        }
-                        countOS++;
+                    for (int l = 0; l < LINE; l++){
+                        if ((i+l<SIZE)&&(j+l<SIZE)&&mapGame[i+l][j+l]==b) countOS++;
                     }
+                    if (countX>=LINE||countY>=LINE||countSL>=LINE||countOS>=LINE) rsl= true;
                 }
             }
-//        for(int i=0; i<LINE;i++) {
-//            if ((x - i >= 0) && mapGame[y][x - i] == b) countX++;
-//            if ((x + i <= SIZE) && mapGame[y][x + i] == b) countX++;
-//        }
-//            //по х
-//            //if (x-i>=0||x+i<=SIZE){
-//
-//            //по у
-//            //if (y-i>=0||x+i<=SIZE){
-//            if ((y-i>=0)&&mapGame[y-i][x]==b) countY++;
-//            if ((x+i<=SIZE)&&mapGame[y+y][x]==b) countY++;
-//            //по SL
-//            if ((x+i<=SIZE)&&(y-i>=0)&&mapGame[y-i][x+i]==b) countSL++;
-//            if ((x-i>=0)&&(y+i<=SIZE)&&mapGame[y+i][x-i]==b) countSL++;
-//            //по\ OS
-//            if ((x-i>=0)&&(y-i>=0)&&mapGame[y-i][x-i]==b) countOS++;
-//            if ((x+i<=SIZE)&&(y+i<=SIZE)&&mapGame[y-i][x-i]==b) countOS++;
         }
-        return (countX>=LINE||countY>=LINE||countSL>=LINE||countOS>=LINE);
+        return rsl;
     }
 
     private static void initMap() {

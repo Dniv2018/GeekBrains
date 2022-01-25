@@ -38,6 +38,40 @@ Random rand = new Random();
 //        System.out.println(Arrays.toString(map));
 
     }
+    private static void makeMapDanger(){
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                mapDanger[i][j] = SIZE;
+            }
+        }
+
+        int a = 0;
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++){
+                if(mapGame[i][j]==DOT_X){
+                    a = countHorizontLine(j,i, DOT_X);
+                    if ((j+a+1<SIZE)&(mapGame[i][j+a+1]!=DOT_0)&(mapDanger[i][j+a+1]>a)){
+                        mapDanger[i][j+a+1]=a;
+                        j=j+a+1;
+                    }
+                }
+            }
+        }
+    }
+
+    private static int countHorizontLine(int x, int y, char DOT){
+        int cl=0;
+        for (int i =1; i<SIZE; i++){
+            if ((x+i<SIZE) & (mapGame[y][x+i]==DOT)) cl++;
+            //if ((x+i<SIZE) & (mapGame[y][x+i]!=DOT) & mapGame[y][x+i]!=DOT_0 & mapDanger[y][x+i]>cl) mapDanger[y][x+i]=cl;
+        }
+        return cl;
+//        cl=0;
+//        for (int i =SIZE-1; i>=0; i--){
+//            if ((x+i>=0) & (mapGame[y][x+i]==DOT)) cl++;
+//            if ((x+i<SIZE) & (mapGame[y][x+i]!=DOT) & mapGame[y][x+i]!=DOT_0 & mapDanger[y][x+i]>cl) mapDanger[y][x+i]=cl;
+//        }
+    }
 
     private static void makeMap(){
         for (int i = 0; i < SIZE; i++) {
@@ -201,7 +235,7 @@ Random rand = new Random();
                     break;
                 }
                 case '/': {
-                    System.out.println("Jn dfv " +y+" "+" "+x+" "+" "+i);
+                    //System.out.println("Jn dfv " +y+" "+" "+x+" "+" "+i);
                     if (y - i < 0 || x + i >= SIZE || mapGame[y - i][x+i] != DOT) rsl = false;
                     break;
                 }
@@ -211,7 +245,7 @@ Random rand = new Random();
                 }
             }
         }
-        System.out.println(rsl);
+        //System.out.println(rsl);
         return rsl;
 //        switch (flag){
 //            case '-':{

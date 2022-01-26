@@ -130,9 +130,9 @@ final static Scanner sc = new Scanner(System.in);
                 mapMult[i][j] = map[i][j]+mapMan[i][j];
             }
         }
-        for (int i=0; i<SIZE; i++) {
-            System.out.println(Arrays.toString(mapMult[i]));
-        }
+//        for (int i=0; i<SIZE; i++) {
+//            System.out.println(Arrays.toString(mapMult[i]));
+//        }
     }
 
     private static void takeCorrect(char DOT){
@@ -287,9 +287,9 @@ final static Scanner sc = new Scanner(System.in);
 
         takeCorrect(DOT_X);
 
-        for (int i=0; i<SIZE; i++) {
-            System.out.println(Arrays.toString(mapDanger[i]));
-        }
+//        for (int i=0; i<SIZE; i++) {
+//            System.out.println(Arrays.toString(mapDanger[i]));
+//        }
     }
 
     private static void makeMapWin(){
@@ -322,9 +322,9 @@ final static Scanner sc = new Scanner(System.in);
             }
         }
         takeCorrect(DOT_0);
-        for (int i=0; i<SIZE; i++) {
-            System.out.println(Arrays.toString(mapWin[i]));
-        }
+//        for (int i=0; i<SIZE; i++) {
+//            System.out.println(Arrays.toString(mapWin[i]));
+//        }
     }
 
     private static void countHorizontLine(int x, int y, char DOT){
@@ -445,9 +445,9 @@ final static Scanner sc = new Scanner(System.in);
                 if(mapGame[i][j] == DOT_0) map[i][j]=0;
             }
         }
-        for (int i=0; i<SIZE; i++) {
-            System.out.println(Arrays.toString(map[i]));
-        }
+//        for (int i=0; i<SIZE; i++) {
+//            System.out.println(Arrays.toString(map[i]));
+//        }
     }
 
     private static void makeMapMan(){
@@ -492,9 +492,9 @@ final static Scanner sc = new Scanner(System.in);
 //                if(mapGame[i][j] == DOT_0) mapMan[i][j]=0;
             }
         }
-        for (int i=0; i<SIZE; i++) {
-            System.out.println(Arrays.toString(mapMan[i]));
-        }
+//        for (int i=0; i<SIZE; i++) {
+//            System.out.println(Arrays.toString(mapMan[i]));
+//        }
     }
 
     private static boolean chekWin(){

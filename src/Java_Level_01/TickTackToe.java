@@ -17,12 +17,14 @@ final static int[][] mapDanger = new int[SIZE][SIZE];
 final static int[][] mapWin = new int[SIZE][SIZE];
 final static int[] turnPoint = new int[2];
 final static int[] calcPoint = new int[3];
+final static int[][] mapMult = new int[SIZE][SIZE];
 
 final static Scanner sc = new Scanner(System.in);
 //Random rand = new Random();
     public static void main(String[] args) {
         initMap();
         printMap();
+        boolean isWin = false;
 
 
     while (true){
@@ -45,25 +47,40 @@ final static Scanner sc = new Scanner(System.in);
         makeMapWin();
         takeCorrect(DOT_0);
 
+        System.out.println("Mult");
+        makemapMult();
 
+        //Поиск победной точки
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
                 if (mapWin[i][j]==1){
                     calcPoint[0]=j;
                     calcPoint[1]=i;
+                    isWin = true;
                 }
             }
         }
-        if (isCalcPoint()) {
-            takeCalcPoint();
-        }else{
-            if (isTurnPoint()) takeTurnPoint();
+        //Если победной точки нет - ищем точку хода
+        if (!isWin){
+            if (isCalcPoint()) {
+                takeCalcPoint();
+            }
+            else{
+                if (isMultPoint()){
+                    takeMultPoint();
+//                }
+//                else{
+//                    if (isTurnPoint()) takeTurnPoint();
+               }
+            }
         }
+
 
         mapGame[calcPoint[1]][calcPoint[0]]=DOT_0;
         turnPoint[0]=calcPoint[0];
         turnPoint[1]=calcPoint[1];
         System.out.println("Ход Компьютера:");
+        System.out.println("X: "+(turnPoint[0]+1)+" Y: "+(turnPoint[1]+1));
         printMap();
         if (chekWin()) {
             System.out.println("Комп победил!");
@@ -79,6 +96,44 @@ final static Scanner sc = new Scanner(System.in);
 
 
     }
+    private static void takeMultPoint(){
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++){
+                if (mapWin[i][j]>calcPoint[2]){
+                    calcPoint[0]=j;
+                    calcPoint[1]=i;
+                    calcPoint[2]=mapWin[i][j];
+                }
+            }
+        }
+    }
+
+    private static boolean isMultPoint(){
+        boolean rsl = false;
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                if (mapMult[i][j]>=mapWin[i][j]){
+                    rsl=true;
+                    calcPoint[0]=j;
+                    calcPoint[1]=i;
+                    calcPoint[2]=mapMult[i][j];
+                }
+            }
+        }
+        return rsl;
+    }
+
+    private static void makemapMult(){
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                mapMult[i][j] = map[i][j]*mapMan[i][j];
+            }
+        }
+        for (int i=0; i<SIZE; i++) {
+            System.out.println(Arrays.toString(mapMult[i]));
+        }
+    }
+
     private static void takeCorrect(char DOT){
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++){

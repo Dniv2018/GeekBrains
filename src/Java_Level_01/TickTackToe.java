@@ -99,10 +99,10 @@ final static Scanner sc = new Scanner(System.in);
     private static void takeMultPoint(){
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++){
-                if (mapWin[i][j]>calcPoint[2]){
+                if ((mapWin[i][j]<mapMult[i][j])&&(mapMult[i][j]>calcPoint[2])){
                     calcPoint[0]=j;
                     calcPoint[1]=i;
-                    calcPoint[2]=mapWin[i][j];
+                    calcPoint[2]=mapMult[i][j];
                 }
             }
         }

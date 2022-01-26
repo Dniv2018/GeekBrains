@@ -36,16 +36,16 @@ final static Scanner sc = new Scanner(System.in);
             break;
         }
         //printMap();
-        System.out.println("DANGER");
+//        System.out.println("DANGER");
         makeMapDanger();
-        System.out.println("Плотность Man");
+//        System.out.println("Плотность Man");
         makeMapMan();
 //        takeCorrect(DOT_X);
-        System.out.println("Плотности");
+//        System.out.println("Плотности");
         makeMap();
-        System.out.println("Win");
+//        System.out.println("Win");
         makeMapWin();
-        takeCorrect(DOT_0);
+//        takeCorrect(DOT_0);
 
 //        System.out.println("Mult");
         makemapMult();

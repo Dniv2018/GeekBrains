@@ -1,6 +1,6 @@
 package Java_Level_01;
 import java.util.Arrays;
-import java.util.Random;
+//import java.util.Random;
 import java.util.Scanner;
 
 public class TickTackToe {
@@ -9,16 +9,17 @@ final static int LINE =3;
 final static char DOT_EMPTY = '.';
 final static char DOT_X = 'X';
 final static char DOT_0 = 'O';
-final static char DOT_DANGER = 'd';
+//final static char DOT_DANGER = 'd';
 final static char[][] mapGame = new char[SIZE][SIZE];
 final static int[][] map = new int[SIZE][SIZE];
+final static int[][] mapMan = new int[SIZE][SIZE];
 final static int[][] mapDanger = new int[SIZE][SIZE];
 final static int[][] mapWin = new int[SIZE][SIZE];
 final static int[] turnPoint = new int[2];
 final static int[] calcPoint = new int[3];
 
 final static Scanner sc = new Scanner(System.in);
-Random rand = new Random();
+//Random rand = new Random();
     public static void main(String[] args) {
         initMap();
         printMap();
@@ -33,18 +34,30 @@ Random rand = new Random();
             break;
         }
         //printMap();
-        //System.out.println("DANGER");
+        System.out.println("DANGER");
         makeMapDanger();
-
-        //System.out.println("Win");
-        makeMapWin();
-        //System.out.println("Плотности");
+        System.out.println("Плотность Man");
+        makeMapMan();
+//        takeCorrect(DOT_X);
+        System.out.println("Плотности");
         makeMap();
+        System.out.println("Win");
+        makeMapWin();
+        takeCorrect(DOT_0);
 
+
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                if (mapWin[i][j]==1){
+                    calcPoint[0]=j;
+                    calcPoint[1]=i;
+                }
+            }
+        }
         if (isCalcPoint()) {
             takeCalcPoint();
         }else{
-            if (isWinPoint()) takeWinPoint();
+            if (isTurnPoint()) takeTurnPoint();
         }
 
         mapGame[calcPoint[1]][calcPoint[0]]=DOT_0;
@@ -66,6 +79,59 @@ Random rand = new Random();
 
 
     }
+    private static void takeCorrect(char DOT){
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++){
+                if (mapDanger[i][j]>0){
+                    switch (DOT){
+                        case DOT_X:{
+                            //Коррекция по горизонтали
+                            if (isPointCorrection(j,i,DOT,'-') & mapDanger[i][j]>1) mapDanger[i][j]--;
+                            //Коррекция по вертикали
+                            if (isPointCorrection(j,i,DOT,'|') & mapDanger[i][j]>1) mapDanger[i][j]--;
+                            //Коррекция по слэш
+                            if (isPointCorrection(j,i,DOT,'/') & mapDanger[i][j]>1) mapDanger[i][j]--;
+                            //Коррекция по обратному слэшу
+                            if (isPointCorrection(j,i,DOT,'b') & mapDanger[i][j]>1) mapDanger[i][j]--;
+                        }
+                        case DOT_0:{
+                            if (isPointCorrection(j,i,DOT,'-') & mapWin[i][j]>1) mapWin[i][j]--;
+                            //Коррекция по вертикали
+                            if (isPointCorrection(j,i,DOT,'|') & mapWin[i][j]>1) mapWin[i][j]--;
+                            //Коррекция по слэш
+                            if (isPointCorrection(j,i,DOT,'/') & mapWin[i][j]>1) mapWin[i][j]--;
+                            //Коррекция по обратному слэшу
+                            if (isPointCorrection(j,i,DOT,'b') & mapWin[i][j]>1) mapWin[i][j]--;
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+
+    private static boolean isPointCorrection(int x, int y, char DOT, char flag){
+       boolean rsl = false;
+       switch (flag){
+           case '-':{
+               rsl = ((x+1<SIZE)&&(mapGame[y][x+1]==DOT) & ((x-1>=0)&&mapGame[y][x-1]==DOT));
+               break;
+           }
+           case '|':{
+               rsl = ( (y+1<SIZE) && (mapGame[y+1][x]==DOT) & ((y-1>=0) && (mapGame[y-1][x]==DOT)) );
+               break;
+           }
+           case '/':{
+               rsl = ((y+1<SIZE) && (x-1>=0) && (mapGame[y+1][x-1]==DOT)) & ((y-1>=0) && (x+1<SIZE) && (mapGame[y-1][x+1]==DOT));
+               break;
+           }
+           case 'b':{
+               rsl = ((y+1<SIZE) && (x+1<SIZE) && (mapGame[y+1][x+1]==DOT)) & ((y-1>=0) && (x-1>=0) && (mapGame[y-1][x-1]==DOT));
+               break;
+           }
+       }
+       return rsl;
+    }
 
     private static boolean checkStandoff(){
         //boolean rsl=false;
@@ -78,7 +144,7 @@ Random rand = new Random();
         return count==SIZE*SIZE;
     }
 
-    private static void takeWinPoint() {
+    private static void takeTurnPoint() {
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++){
                 if (map[i][j]>calcPoint[2]){
@@ -90,7 +156,7 @@ Random rand = new Random();
         }
     }
 
-    private static boolean isWinPoint() {
+    private static boolean isTurnPoint() {
         boolean rsl =false;
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++){
@@ -104,7 +170,7 @@ Random rand = new Random();
         }
         return rsl;
     }
-
+//Может здесь поставить мэпМэн
     private static boolean isCalcPoint() {
         boolean rsl=false;
         for (int i = 0; i < SIZE; i++) {
@@ -134,16 +200,6 @@ Random rand = new Random();
         }
     }
 
-//    private static void maskOnMap(char DOT_1, char DOT_2){
-//
-//                for (int i = 0; i < SIZE; i++) {
-//                    for (int j = 0; j < SIZE; j++) {
-//                        if(mapGame[i][j] == DOT_1) mapDanger[i][j]=0;
-//                        if(mapGame[i][j] == DOT_2) mapWin[i][j]=0;
-//                    }
-//                }
-//    }
-
     private static void makeMapDanger(){
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
@@ -172,6 +228,9 @@ Random rand = new Random();
                 if(mapGame[i][j] == DOT_0) mapDanger[i][j]=0;
             }
         }
+
+        takeCorrect(DOT_X);
+
         for (int i=0; i<SIZE; i++) {
             System.out.println(Arrays.toString(mapDanger[i]));
         }
@@ -195,14 +254,18 @@ Random rand = new Random();
                 }
             }
         }
-
+//        System.out.println("Win");
+//        for (int i=0; i<SIZE; i++) {
+//            System.out.println(Arrays.toString(mapWin[i]));
+//        }
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
-                if(mapGame[i][j] == DOT_X) mapWin[i][j]=0;
-                if(mapGame[i][j] == DOT_0) mapWin[i][j]=0;
+                if (mapGame[i][j] == DOT_X) mapWin[i][j]=0;
+                if (mapGame[i][j] == DOT_0) mapWin[i][j]=0;
+                if (map[i][j]==0) mapWin[i][j]=0;
             }
         }
-
+        takeCorrect(DOT_0);
         for (int i=0; i<SIZE; i++) {
             System.out.println(Arrays.toString(mapWin[i]));
         }
@@ -248,7 +311,7 @@ Random rand = new Random();
         //return cl;
         cl=0;
         for (int i =0; i<SIZE; i++){
-            if ((y+i<SIZE)&&(x-i>=0) && (mapGame[y+i][x]==DOT)) cl++;
+            if ((y+i<SIZE)&&(x-i>=0) && (mapGame[y+i][x-i]==DOT)) cl++;
             canPointWrite(x-i,y+i, DOT, cl);
         }
     }
@@ -268,15 +331,16 @@ Random rand = new Random();
         }
     }
 
+    //Проверка и запись количества оставшихся точек до построения линии в крайнюю точку
     private static void canPointWrite(int x, int y, char DOT, int cl){
         //boolean rsl = false;
         switch (DOT){
             case DOT_X:{
-                if ((x>=0)&(x<SIZE)&(y>=0)&(y<SIZE)&&(mapGame[y][x]!=DOT_0)&(mapDanger[y][x]>LINE-cl)) mapDanger[y][x] = LINE-cl;
+                if (((x>=0)&(x<SIZE)&(y>=0)&(y<SIZE))&&((mapGame[y][x]!=DOT_0)&(mapGame[y][x]!=DOT)&(mapDanger[y][x]>LINE-cl))) mapDanger[y][x] = LINE-cl;
                 break;
             }
             case DOT_0:{
-                if ((x>=0)&(x<SIZE)&(y>=0)&(y<SIZE)&&(mapGame[y][x]!=DOT_X)&&(mapWin[y][x]>LINE-cl)) mapWin[y][x] = LINE-cl;
+                if (((x>=0)&(x<SIZE)&(y>=0)&(y<SIZE))&&((mapGame[y][x]!=DOT_X)&(mapGame[y][x]!=DOT)&(mapWin[y][x]>LINE-cl))) mapWin[y][x] = LINE-cl;
                 break;
             }
         }
@@ -330,6 +394,53 @@ Random rand = new Random();
         }
     }
 
+    private static void makeMapMan(){
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                mapMan[i][j] = 0;
+            }
+        }
+        for (int vertPoint=0; vertPoint<SIZE; vertPoint++){
+            for (int horizontPoint =0; horizontPoint< SIZE; horizontPoint++){
+                //isMakeLine(int x, int y, char DOT, char flag)
+                if (isMakeLine(horizontPoint, vertPoint, DOT_0, '-')){
+                    //if (horizontPoint + (LINE-1) < SIZE){
+                    for (int linePoint = 0; linePoint< LINE; linePoint++) {
+                        mapMan[vertPoint][horizontPoint+linePoint] ++;//по горизонтали
+                    }
+                }
+                if (isMakeLine(horizontPoint, vertPoint, DOT_0, '|')){
+                    //if (vertPoint + (LINE-1) < SIZE){
+                    for (int linePoint = 0; linePoint< LINE; linePoint++) {
+                        mapMan[vertPoint+linePoint][horizontPoint] ++;//по вертикали
+                    }
+                }
+                if(isMakeLine(horizontPoint, vertPoint, DOT_0, 'b')){
+                    //if((vertPoint+(LINE-1) < SIZE) & (horizontPoint+(LINE-1) < SIZE)){
+                    for (int linePoint = 0; linePoint< LINE; linePoint++){
+                        mapMan[vertPoint+linePoint][horizontPoint+linePoint]++;//\обратный слэш
+                    }
+                }
+                if(isMakeLine(horizontPoint, vertPoint, DOT_0, '/')){
+                    //if((vertPoint+(LINE-1) < SIZE) & (horizontPoint-(LINE-1) >= 0)){
+                    for (int linePoint = 0; linePoint< LINE; linePoint++){
+                        mapMan[vertPoint-linePoint][horizontPoint+linePoint]++;//прямой слэш
+                    }
+                }
+            }
+        }
+
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                if(mapGame[i][j] == DOT_X) mapMan[i][j]=0;
+//                if(mapGame[i][j] == DOT_0) mapMan[i][j]=0;
+            }
+        }
+        for (int i=0; i<SIZE; i++) {
+            System.out.println(Arrays.toString(mapMan[i]));
+        }
+    }
+
     private static boolean chekWin(){
         int x = turnPoint[0];
         int y = turnPoint[1];
@@ -348,7 +459,7 @@ Random rand = new Random();
                         if ((j+l<SIZE)&&mapGame[i][j+l]==b) countX++;
                     }
                     //по у
-                    for (int l = 1; l < LINE; l++){
+                    for (int l = 0; l < LINE; l++){
                         if ((i+l<SIZE)&&mapGame[i+l][j]==b) countY++;
                     }
                     //по SL

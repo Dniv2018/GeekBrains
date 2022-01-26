@@ -4,19 +4,19 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class TickTackToe {
-final static int SIZE = 3;
-final static int LINE =3;
+final static int SIZE = 5;
+final static int LINE =4;
 final static char DOT_EMPTY = '.';
 final static char DOT_X = 'X';
 final static char DOT_0 = 'O';
 //final static char DOT_DANGER = 'd';
-final static char[][] mapGame = new char[SIZE][SIZE];
-final static int[][] map = new int[SIZE][SIZE];
-final static int[][] mapMan = new int[SIZE][SIZE];
-final static int[][] mapDanger = new int[SIZE][SIZE];
-final static int[][] mapWin = new int[SIZE][SIZE];
-final static int[] turnPoint = new int[2];
-final static int[] calcPoint = new int[3];
+final static char[][] mapGame = new char[SIZE][SIZE]; //Карта Игры
+final static int[][] map = new int[SIZE][SIZE];//Карта плотности/густоты возможных линий для Компа
+final static int[][] mapMan = new int[SIZE][SIZE];//Карта плотности/густоты возможных линий для Игрока
+final static int[][] mapDanger = new int[SIZE][SIZE];//Карта количества точек необходимых для построения линии включая текущую точку, для Игрока
+final static int[][] mapWin = new int[SIZE][SIZE];//Карта количества точек необходимых для построения линии включая текущую точку, для Игрока
+final static int[] turnPoint = new int[2];//Точка хода
+final static int[] calcPoint = new int[3];//Точка расчета
 final static int[][] mapMult = new int[SIZE][SIZE];
 
 final static Scanner sc = new Scanner(System.in);
@@ -127,7 +127,7 @@ final static Scanner sc = new Scanner(System.in);
     private static void makemapMult(){
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
-                mapMult[i][j] = map[i][j]*mapMan[i][j];
+                mapMult[i][j] = map[i][j]+mapMan[i][j];
             }
         }
         for (int i=0; i<SIZE; i++) {
@@ -570,8 +570,8 @@ final static Scanner sc = new Scanner(System.in);
 
     private static boolean isNotValid(int x, int y) {
         boolean rsl = false;
-        if (x < 0 || x >= SIZE || y < 0 || y >= SIZE) rsl = true;
-        if (mapGame[y][x] == DOT_X || mapGame[y][x] == DOT_0) rsl = true;
+        if ((x < 0 || x >= SIZE || y < 0 || y >= SIZE)||(mapGame[y][x] == DOT_X || mapGame[y][x] == DOT_0)) rsl = true;
+        //if (mapGame[y][x] == DOT_X || mapGame[y][x] == DOT_0) rsl = true;
         return rsl;
     }
 

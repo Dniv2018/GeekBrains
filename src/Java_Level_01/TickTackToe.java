@@ -4,8 +4,8 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class TickTackToe {
-final static int SIZE = 5;
-final static int LINE =4;
+final static int SIZE = 3;
+final static int LINE =3;
 final static char DOT_EMPTY = '.';
 final static char DOT_X = 'X';
 final static char DOT_0 = 'O';
@@ -47,7 +47,7 @@ final static Scanner sc = new Scanner(System.in);
         makeMapWin();
         takeCorrect(DOT_0);
 
-        System.out.println("Mult");
+//        System.out.println("Mult");
         makemapMult();
 
         //Поиск победной точки

@@ -1,6 +1,6 @@
 package Java_Level_01.Lesson_06;
 
-public class Animal {
+public abstract class Animal {
 
     private String name;
     private static int countAnimal;
@@ -23,12 +23,8 @@ public class Animal {
         return countAnimal;
     }
 
-    boolean run(int a){
-        return false;
-    }
+    abstract boolean run(int a);
 
-    boolean swim(int a){
-        return false;
-    }
+    abstract boolean swim(int a);
 
 }

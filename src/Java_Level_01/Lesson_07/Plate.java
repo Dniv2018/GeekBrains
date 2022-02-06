@@ -15,8 +15,8 @@ public class Plate {
         return false;
     }
 
-    public void info() {
-        System.out.println("plate: " + food);
+    public String info() {
+        return "plate: " + food;
     }
 
     public void addFood(int addition) {

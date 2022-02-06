@@ -19,14 +19,14 @@ public class MainClass {
         Plate plate = new Plate(0);
         System.out.println();
         System.out.println("Put the plate.");
-        plate.info();
+        System.out.println(plate.info());
         boolean foodSufficiency;
 
         do {
             plate.addFood(50);
             System.out.println();
             System.out.println("Add food to the plate");
-            plate.info();
+            System.out.println(plate.info());
 
             foodSufficiency = tryToFeedTheCats(arrayCat, plate);
 
@@ -34,7 +34,7 @@ public class MainClass {
 
         System.out.println();
         System.out.println("All cats fullness.");
-        plate.info();
+        System.out.println(plate.info());
 
         for (Cat cat:
                 arrayCat) {
@@ -55,9 +55,9 @@ public class MainClass {
                 if (!cat.eat(plate)) {
                     System.out.println(cat.getName() + " do not fullness");
                     foodSufficiency = false;
-                    plate.info();
+                    System.out.println(plate.info());
                 }else{
-                    plate.info();
+                    System.out.println(plate.info());
                     System.out.println(cat.getName() + " is fullness");
                 }
             }

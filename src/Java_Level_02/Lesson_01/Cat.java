@@ -12,12 +12,14 @@ public class Cat implements Action{
     }
 
     @Override
-    public void run() {
+    public int run() {
         System.out.println("Кот " + nick + " бежит");
+        return runLong;
     }
 
     @Override
-    public void jump() {
+    public int jump() {
         System.out.println("Кот " + nick + " прыгает");
+        return jumpHeight;
     }
 }

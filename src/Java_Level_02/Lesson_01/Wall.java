@@ -7,8 +7,8 @@ public class Wall extends Difficult{
         super(a);
     }
 
-    boolean mayMakeWall(int a){
+    boolean mayMake(int a){
         System.out.println("Попытка преодоления стены");
-        return mayMake(a);
+        return super.mayMake(a);
     }
 }

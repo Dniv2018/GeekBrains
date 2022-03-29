@@ -7,8 +7,8 @@ public class Track extends Difficult{
         super(i);
     }
 
-    boolean mayMakeTracK(int a){
+    boolean mayMake(int a){
         System.out.println("Попытка преодоления беговой дорожки");
-        return mayMake(a);
+        return super.mayMake(a);
     }
 }

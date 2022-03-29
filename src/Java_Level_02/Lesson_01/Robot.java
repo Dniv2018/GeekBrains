@@ -12,12 +12,14 @@ public class Robot implements Action{
     }
 
     @Override
-    public void run() {
+    public int run() {
         System.out.println("Робот " + nickName + " побежал");
+        return runLong;
     }
 
     @Override
-    public void jump() {
+    public int jump() {
         System.out.println("Робот " + nickName + " прыгает");
+        return jumpHeight;
     }
 }

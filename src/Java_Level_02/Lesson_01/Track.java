@@ -1,16 +1,14 @@
 package Java_Level_02.Lesson_01;
 
-public class Track {
-    private int trackLong;
+public class Track extends Difficult{
+    //private int trackLong;
 
-    void Track(int a){
-        trackLong = a;
+    public Track(int i) {
+        super(i);
     }
 
-    boolean mayMakeTrack(int a){
-        if (a>trackLong){
-            return true;
-        }
-        return false;
+    boolean mayMakeTracK(int a){
+        System.out.println("Попытка преодоления беговой дорожки");
+        return mayMake(a);
     }
 }

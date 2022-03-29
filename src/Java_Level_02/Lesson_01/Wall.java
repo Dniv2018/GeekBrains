@@ -1,16 +1,14 @@
 package Java_Level_02.Lesson_01;
 
-public class Wall {
-    private int wallHeight;
+public class Wall extends Difficult{
+//    private int wallHeight;
 
-    void Wall(int a){
-        wallHeight = a;
+    public Wall(int a){
+        super(a);
     }
 
-    boolean mayMakeTrack(int a){
-        if (a>wallHeight){
-            return true;
-        }
-        return false;
+    boolean mayMakeWall(int a){
+        System.out.println("Попытка преодоления стены");
+        return mayMake(a);
     }
 }

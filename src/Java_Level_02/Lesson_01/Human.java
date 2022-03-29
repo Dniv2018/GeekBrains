@@ -14,11 +14,12 @@ public class Human implements Action{
 
     @Override
     public void run() {
-        System.out.println("Человек " + name + " бежит");
+        System.out.println("Человек " + name + " побежал");
+
     }
 
     @Override
     public void jump() {
-        System.out.println("Человек " + name + " бежит");
+        System.out.println("Человек " + name + " прыгает");
     }
 }

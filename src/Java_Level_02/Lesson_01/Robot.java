@@ -13,7 +13,7 @@ public class Robot implements Action{
 
     @Override
     public void run() {
-        System.out.println("Робот " + nickName + " бежит");
+        System.out.println("Робот " + nickName + " побежал");
     }
 
     @Override

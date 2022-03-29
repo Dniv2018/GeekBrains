@@ -1,6 +1,6 @@
 package Java_Level_02.Lesson_01;
 
-public class Human implements Action{
+public class Human implements ActionN {
     private String name;
     private int runLong;
     private int jumpHeight;

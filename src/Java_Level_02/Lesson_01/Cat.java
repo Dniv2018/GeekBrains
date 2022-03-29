@@ -1,6 +1,6 @@
 package Java_Level_02.Lesson_01;
 
-public class Cat implements Action{
+public class Cat implements ActionN {
     private String nick;
     private int runLong;
     private int jumpHeight;

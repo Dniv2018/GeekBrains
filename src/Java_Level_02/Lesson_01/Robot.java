@@ -1,6 +1,6 @@
 package Java_Level_02.Lesson_01;
 
-public class Robot implements Action{
+public class Robot implements ActionN {
     private int nickName;
     private int runLong;
     private int jumpHeight;

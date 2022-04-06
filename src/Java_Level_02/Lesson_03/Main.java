@@ -4,9 +4,7 @@ import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
-//        1. Создать массив с набором слов(10 - 20слов, должны встречаться повторяющиеся).Найти и вывести
-//        список уникальных слов, из которых состоит массив(дубликаты не считаем).Посчитать сколько раз встречается каждое
-//        слово.
+
         String[] str = {"main", "public", "class", "static", "String", "java", "class", "massif", "array", "Class", "java", "java"};
         HashMap<String, Integer> hm_collection = new HashMap<>();
 
@@ -21,5 +19,25 @@ public class Main {
             }
         }
         System.out.println(hm_collection);
+
+
+        PhoneBook pb = new PhoneBook();
+
+        pb.add("Иванов","777");
+        pb.add("Петров","555");
+        pb.add("Сидоров","333");
+        pb.add("Иванов","222");
+        pb.add("Васечкин","777");
+        pb.add("Прыгунов","111");
+        pb.add("Сидоров","444");
+
+
+        String[] family = {"Иванов", "Петров", "Найденов"};
+
+        for (String s: family) {
+            if (pb.get(s) !=null){
+                System.out.println(s + ": " + pb.get(s));
+            }else System.out.println(s + ": такой фамилии не обнаружено");
+        }
     }
 }

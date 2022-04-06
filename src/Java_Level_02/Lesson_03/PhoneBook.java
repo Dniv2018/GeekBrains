@@ -4,11 +4,23 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 public class PhoneBook {
-    private HashMap<String, HashSet<String>> phonebox;
+    HashMap<String, HashSet<String>> phonebox;
 
-    protected PhoneBook(){
+    public PhoneBook(){
         this.phonebox = new HashMap<>();
     }
+
+    public void add(String family, String number){
+        HashSet <String> phone = phonebox.getOrDefault(family, new HashSet<>());
+        phone.add(number);
+        phonebox.put(family, phone);
+    }
+
+    public HashSet get(String key){
+        return phonebox.get(key);
+    }
+
+
 
 
 //    2. Написать простой класс ТелефонныйСправочник, который хранит в себе список фамилий и телефонных номеров.

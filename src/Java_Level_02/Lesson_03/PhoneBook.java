@@ -16,7 +16,7 @@ public class PhoneBook {
         phonebox.put(family, phone);
     }
 
-    public HashSet get(String key){
+    public HashSet<String> get(String key){
         return phonebox.get(key);
     }
 

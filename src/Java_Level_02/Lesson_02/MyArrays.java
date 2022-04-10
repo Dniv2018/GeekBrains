@@ -1,4 +1,4 @@
-package Java_Level_02.Lesson_01.Lesson_02;
+package Java_Level_02.Lesson_02;
 
 public class MyArrays {
     private Solid[] myArr;

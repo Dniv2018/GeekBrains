@@ -3,16 +3,15 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox fx:controller="sample.Controller" fillWidth="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-      prefHeight="401.0" prefWidth="347.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <TextArea fx:id="dialogTextArea" prefHeight="359.0" prefWidth="347.0" style="-fx-background-color: blue;" wrapText="true" VBox.vgrow="ALWAYS" />
-      <HBox cache="true" prefHeight="42.0" prefWidth="347.0">
-         <children>
-            <TextField  prefHeight="41.0" prefWidth="299.0" />
-            <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="50.0" style="-fx-background-color: #8cbafc;"
-                    text="Send" textFill="#0064e8" onAction="#btnSend"/>
-         </children>
-      </HBox>
-   </children>
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="401.0"
+      prefWidth="347.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="sample.Controller">
+   <TextArea fx:id="dialogTextArea" editable="false" prefHeight="359.0" prefWidth="347.0"
+             style="-fx-background-color: blue;" wrapText="true" VBox.vgrow="ALWAYS"/>
+   <HBox cache="true" prefHeight="42.0" prefWidth="347.0">
+      <TextField fx:id="inText" prefHeight="41.0" prefWidth="299.0" promptText="Введите текст" HBox.hgrow="ALWAYS"
+                 onAction="#Send"/>
+      <Button fx:id="btnSend" mnemonicParsing="false" onAction="#Send" prefHeight="40.0" prefWidth="50.0"
+              style="-fx-background-color: #8cbafc;" text="Send" textFill="#0064e8"/>
+   </HBox>
 </VBox>

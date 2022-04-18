@@ -1,4 +1,4 @@
-package sample;
+package Java_Level_02.Lesson_JFX.src.sample;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

@@ -1,4 +1,4 @@
-package sample;
+package Java_Level_02.Lesson_JFX.src.sample;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

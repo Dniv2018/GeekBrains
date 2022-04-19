@@ -5,7 +5,7 @@
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="401.0"
       prefWidth="347.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="sample.Controller">
+      fx:controller="Java_Level_02.Lesson_JFX.src.sample.Controller">
    <TextArea fx:id="dialogTextArea" editable="false" prefHeight="359.0" prefWidth="347.0"
              style="-fx-background-color: blue;" wrapText="true" VBox.vgrow="ALWAYS"/>
    <HBox cache="true" prefHeight="42.0" prefWidth="347.0">

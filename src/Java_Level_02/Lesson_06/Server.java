@@ -5,23 +5,22 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Vector;
 
 public class Server {
-    public static void main(String[] args) {
-        Socket socket = null;
-        try (ServerSocket serverSocket = new ServerSocket(8189)) {
+    private Vector<ServerToClient> clients;
+    public void main() {
+        Socket socket;
+        ServerSocket server;
+        clients = new Vector<>();
+
+        try {
+            server = new ServerSocket(8189);
             System.out.println("Сервер запущен, ожидаем подключения...");
-            socket = serverSocket.accept();
+            socket = server.accept();
             System.out.println("Клиент подключился");
-            DataInputStream in = new DataInputStream(socket.getInputStream());
-            DataOutputStream out = new DataOutputStream(socket.getOutputStream());
-            while (true) {
-                String str = in.readUTF();
-                if (str.equals("/end")) {
-                    break;
-                }
-                out.writeUTF("Эхо: " + str);
-            }
+            clients.add(new ServerToClient(socket));
+
         }
         catch (IOException e) {
             e.printStackTrace();

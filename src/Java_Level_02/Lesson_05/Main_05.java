@@ -23,7 +23,12 @@ public class Main_05 {
         System.arraycopy(arr, 0, a1, 0, h);
         System.arraycopy(arr, h, a2, 0, h);
 
-        Thread t1 = new Thread(() -> fillByForm(a1, h));
+        Thread t1 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                fillByForm(a1, h);
+            }
+        });
         Thread t2 = new Thread(() -> fillByForm(a1, h));
         t1.start();
         t2.start();

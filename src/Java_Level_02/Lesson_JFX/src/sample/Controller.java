@@ -41,13 +41,11 @@ public class Controller implements Initializable {
             dialogTextArea.appendText(inText.getText() + "\n\n");
             try {
                 out.writeUTF(inText.getText());
-                inText.clear();
-                inText.requestFocus();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-
+            inText.clear();
+            inText.requestFocus();
         }
         //inText.requestFocus();
     }
@@ -66,7 +64,7 @@ public class Controller implements Initializable {
                             while(true) {
                                 String str = in.readUTF();
                                 if (str.equals("Эхо: /end")) {
-                                    dialogTextArea.appendText(str);
+                                    dialogTextArea.appendText(str + "\nСервер отключен");
                                     break;
                                 }
                                 dialogTextArea.appendText(str + "\n\n");

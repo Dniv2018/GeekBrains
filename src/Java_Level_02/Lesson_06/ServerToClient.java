@@ -58,6 +58,7 @@ public class ServerToClient {
                 @Override
                 public void run() {
                     while (true){
+//                        System.out.println("Server.message: " + Server.getMessage());
                         if (!Server.getMessage().equals("")){
                             System.out.println("Server.message: " + Server.getMessage());
                             try {

@@ -33,8 +33,8 @@ public class Controller implements Initializable {
     @FXML
     Button btnSend;
 
-    public void Send(){
-        if (!inText.getText().equals("")){
+    public void Send() {
+        if (!inText.getText().equals("")) {
             ZonedDateTime dateTime = ZonedDateTime.now();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
             try {
@@ -62,19 +62,21 @@ public class Controller implements Initializable {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
+                    synchronized (dialogTextArea) {
                         try {
-                            while(true) {
+                            while (true) {
                                 String str = in.readUTF();
                                 if (str.equals("Эхо: /end")) {
-                                    dialogTextArea.appendText(str + "\nСервер отключен");
+                                    dialogTextArea.appendText(str + "\nСервер отключен\n");
                                     break;
                                 }
+//                                System.out.println(str + "\n\n");
                                 dialogTextArea.appendText(str + "\n\n");
                             }
                         } catch (IOException e) {
                             System.out.println("Сервер недоступен\n\n");
                             //e.printStackTrace();
-                        }finally {
+                        } finally {
                             try {
                                 in.close();
                                 out.close();
@@ -84,6 +86,7 @@ public class Controller implements Initializable {
                             }
                         }
                     }
+                }
             }).start();
         } catch (IOException e) {
             e.printStackTrace();

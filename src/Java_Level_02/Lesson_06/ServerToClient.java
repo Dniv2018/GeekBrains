@@ -20,17 +20,12 @@ public class ServerToClient {
             in = new DataInputStream(socket.getInputStream());
             out = new DataOutputStream(socket.getOutputStream());
 
-            new Thread(new Runnable() {
+            Thread messageClient = new Thread(new Runnable() {
                 @Override
                 public void run() {
                     try {
                         while (true) {
                             if (!Server.close){
-                                if (!Server.message.equals("")){
-                                    System.out.println("!Server.message: " + Server.message);
-                                    out.writeUTF(Server.message + "\n\n");
-                                    Server.setMessage("");
-                                }else{
                                     String str = in.readUTF();
 
                                     if (str.equals("/end")) {
@@ -39,8 +34,6 @@ public class ServerToClient {
                                     }
                                     System.out.println("Client: " + str);
                                     out.writeUTF("Эхо: " + str);
-                                }
-
                             }else{
                                 out.writeUTF("Сервер закрыт");
                                 break;
@@ -59,7 +52,37 @@ public class ServerToClient {
                         }
                     }
                 }
-            }).start();
+            });
+
+            Thread serverMessage = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    while (true){
+                        if (!Server.getMessage().equals("")){
+                            System.out.println("Server.message: " + Server.getMessage());
+                            try {
+                                out.writeUTF("Server.message: " + Server.getMessage() + "\n\n");
+                            }catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            Server.setMessage("");
+                        }
+                    }
+                }
+            });
+
+            messageClient.start();
+            serverMessage.setDaemon(true);
+            serverMessage.start();
+
+            try {
+                serverMessage.join();
+                messageClient.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+
 
         } catch (IOException e) {
             e.printStackTrace();

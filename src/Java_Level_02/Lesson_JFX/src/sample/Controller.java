@@ -37,12 +37,14 @@ public class Controller implements Initializable {
         if (!inText.getText().equals("")){
             ZonedDateTime dateTime = ZonedDateTime.now();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
-            dialogTextArea.appendText(dateTime.format(formatter) + "\n");
-            dialogTextArea.appendText(inText.getText() + "\n\n");
             try {
                 out.writeUTF(inText.getText());
+                dialogTextArea.appendText(dateTime.format(formatter) + "\n");
+                dialogTextArea.appendText(inText.getText() + "\n\n");
             } catch (IOException e) {
-                e.printStackTrace();
+                dialogTextArea.appendText("Сервер недоступен\n\n");
+//                System.out.println("Сервер недоступен");
+//                e.printStackTrace();
             }
             inText.clear();
             inText.requestFocus();
@@ -70,7 +72,8 @@ public class Controller implements Initializable {
                                 dialogTextArea.appendText(str + "\n\n");
                             }
                         } catch (IOException e) {
-                            e.printStackTrace();
+                            System.out.println("Сервер недоступен\n\n");
+                            //e.printStackTrace();
                         }finally {
                             try {
                                 in.close();

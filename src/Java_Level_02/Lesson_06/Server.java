@@ -10,12 +10,18 @@ public class Server {
     private Vector<ServerToClient> clients;
     static boolean close = false;
     Socket socket;
+    static String message;
+
+
+    public static String getMessage() {
+        return message;
+    }
 
     public static void setMessage(String message) {
         Server.message = message;
     }
 
-    static String message = "";
+
 
     public void main() throws IOException {
         ServerSocket server;
@@ -45,6 +51,7 @@ public class Server {
                             break;
                         }
                     }
+                    System.out.println("Клиентский поток сервера закрыт");
                 }
                 catch (IOException e) {
                     e.printStackTrace();
@@ -56,33 +63,35 @@ public class Server {
             @Override
             public void run() {
                 System.out.println("!!!!!!");
+                setMessage("");
                 while (true){
                     String inputString = scanner.nextLine();
 //                        String inputString = bufferedReader.readLine();
-                    System.out.println("????" + inputString);
+//                    System.out.println("????" + inputString);
 
-                        if (inputString.equals("Close_server")){
+                        if (inputString.equals("/end")){
                             close =true;
                             break;
                         }else{
-                            message = inputString;
+                            setMessage(inputString);
                             System.out.println("?: " + message);
 //                            for (ServerToClient a: clients) {
 //                                a.setMessage(inputString);
 //                            }
                         }
                 }
+                System.out.println("Поток сообщений сервера закрыт");
             }
         });
 
-
+        clientThread.setDaemon(true);
         clientThread.start();
         serverThread.start();
 
 
         try {
             serverThread.join();
-            clientThread.join();
+//            clientThread.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

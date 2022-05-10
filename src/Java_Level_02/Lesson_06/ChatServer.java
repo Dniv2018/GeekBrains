@@ -4,6 +4,12 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+
+/**
+ * Здесь запускается сервер
+ * Запуск Клиента на Lesson_JFX.scr.sample.Main
+ */
+
 public class ChatServer {
 
 

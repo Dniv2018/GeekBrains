@@ -28,9 +28,9 @@ public class ChatServer {
                 String strServerMessage = "";
                 while (true){
                     try {
-                        System.out.println("Принимаем сообщение с консоли\n");
+//                        System.out.println("Принимаем сообщение с консоли\n");
                         strServerMessage = bufferedReader.readLine();
-                        System.out.println("Сообщение с консоли: " + strServerMessage + "\n");
+//                        System.out.println("Сообщение с консоли: " + strServerMessage + "\n");
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -39,14 +39,14 @@ public class ChatServer {
                             network.outNetwork("Сервер и связь с ним прекращены");
                             network.closeNetwork();
                         } catch (IOException e) {
-                            e.printStackTrace();
+                            System.out.println("Связь с клиентом потеряна");
                         }
                         break;
                     }else{
                         try {
                             network.outNetwork("Server: " + strServerMessage);
                         } catch (IOException e) {
-                            e.printStackTrace();
+                            System.out.println("Связь с клиентом потеряна");
                         }
                     }
                 }

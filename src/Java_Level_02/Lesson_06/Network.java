@@ -32,6 +32,7 @@ public class Network {
                         String str = inNetwork();
                         if (str.equals("/end")) {
                             outNetwork("Эхо: " + str);
+                            System.out.println("Клиент отключился от сервера");
                             break;
                         }
                         System.out.println("Client: " + str);

@@ -59,7 +59,7 @@ public class ServerToClient {
                 public void run() {
                     while (true){
 //                        System.out.println("Server.message: " + Server.getMessage());
-                        if (!Server.getMessage().equals("")){
+                        if (!Server.getMessage().isEmpty()){
                             System.out.println("Server.message: " + Server.getMessage());
                             try {
                                 out.writeUTF("Server.message: " + Server.getMessage() + "\n\n");
@@ -83,12 +83,13 @@ public class ServerToClient {
                 e.printStackTrace();
             }
 
-
-
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+
     }
+
 
 //    public void setMessage(String message) {
 //        this.message = message;

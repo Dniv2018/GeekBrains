@@ -34,15 +34,18 @@ public class Controller implements Initializable {
     Button btnSend;
 
     public void Send() {
-        if (!inText.getText().equals("")) {
-            ZonedDateTime dateTime = ZonedDateTime.now();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        if (!inText.getText().isEmpty()) {
+//            ZonedDateTime dateTime = ZonedDateTime.now();
+//            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+//            dialogTextArea.appendText(dateTime.format(formatter) + "\n");
+//            dialogTextArea.appendText(inText.getText() + "\n\n");
+//            String str = inText.getText();
+            sendToGUI(inText.getText());
             try {
                 out.writeUTF(inText.getText());
-                dialogTextArea.appendText(dateTime.format(formatter) + "\n");
-                dialogTextArea.appendText(inText.getText() + "\n\n");
             } catch (IOException e) {
-                dialogTextArea.appendText("Сервер недоступен\n\n");
+                sendToGUI("Сервер недоступен\n\n");
+//                dialogTextArea.appendText("Сервер недоступен\n\n");
 //                System.out.println("Сервер недоступен");
 //                e.printStackTrace();
             }
@@ -50,6 +53,13 @@ public class Controller implements Initializable {
             inText.requestFocus();
         }
         //inText.requestFocus();
+    }
+
+    synchronized void sendToGUI(String str){
+        ZonedDateTime dateTime = ZonedDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        dialogTextArea.appendText(dateTime.format(formatter) + "\n");
+        dialogTextArea.appendText(str + "\n\n");
     }
 
     @Override
@@ -62,16 +72,15 @@ public class Controller implements Initializable {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    synchronized (dialogTextArea) {
                         try {
                             while (true) {
                                 String str = in.readUTF();
                                 if (str.equals("Эхо: /end")) {
-                                    dialogTextArea.appendText(str + "\nСервер отключен\n");
+                                    sendToGUI(str + "\nСервер отключен\n");
                                     break;
                                 }
 //                                System.out.println(str + "\n\n");
-                                dialogTextArea.appendText(str + "\n\n");
+                                sendToGUI(str + "\n\n");
                             }
                         } catch (IOException e) {
                             System.out.println("Сервер недоступен\n\n");
@@ -85,7 +94,6 @@ public class Controller implements Initializable {
                                 e.printStackTrace();
                             }
                         }
-                    }
                 }
             }).start();
         } catch (IOException e) {
